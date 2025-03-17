@@ -10,143 +10,9 @@ import java.lang.Math;
 
 public class MainClass {
 
-	public static void main(String[] args) {
-		
+	public static void main(String[] args) {		
 		Menu menu = new Menu();
-        menu.mostrarMenu();
-		/*
-		 * String menu =
-		 * "JUEGO DE CARTAS\n1.-Crear Jugador\n2,-Setear Rondas\n3.-Setear Jugadores\n4.-Comenzar Partida\n5.-Estádisticas\n6.-Exit"
-		 * ; System.out.println(menu); Scanner sc = new Scanner(System.in); int option;
-		 * boolean flg00 = true; boolean flg01 = false; boolean flg02 = false; boolean
-		 * flg03 = false; boolean flg04 = false; boolean flg05 = false;
-		 * ContenedorJugadoresCartas contenedor_jugadores_cartas = new
-		 * ContenedorJugadoresCartas(); ContenedorCartas contenedor_cartas = new
-		 * ContenedorCartas();
-		 * 
-		 * 
-		 * 
-		 * 
-		 * Carta[] cartas = new Carta[22]; cartas[0] = new Carta("Zorro de 9 colas", 4,
-		 * 5, 4, 1); cartas[1] = new Carta("Gobblin", 5, 5, 4, 3); cartas[2] = new
-		 * Carta("Guerrero", 6, 4, 5, 4); cartas[3] = new Carta("Piedrin", 1, 8, 1, 1);
-		 * cartas[4] = new Carta("Slime", 2, 3, 2, 2); cartas[5] = new
-		 * Carta("Puerta de Baldur", 0,7,4,1); cartas[6] = new Carta("Guiverno", 7, 4,
-		 * 6, 9); cartas[7] = new Carta("Ferrosaurio", 8, 6, 5, 7); cartas[8] = new
-		 * Carta("Balatro Balátrez",6,2,3,5); cartas[9] = new Carta("Slime de Oro", 2,
-		 * 1, 9, 10); cartas[10] = new Carta("Gólem de piedra", 7, 8, 10, 1); cartas[11]
-		 * = new Carta("LoboLava",2,4,5,6); cartas[12] = new Carta("Lightning ", 5,
-		 * 6,4,5); cartas[13] = new Carta("Cifosoa", 5, 3, 6, 1); cartas[14] = new
-		 * Carta("Minotauro", 3, 2, 2, 6); cartas[15] = new Carta("Hacienda",9 , 10, 5,
-		 * 7); cartas[16] = new Carta("Gustavo Fring", 3, 7, 1, 6); cartas[17] = new
-		 * Carta("Rusello", 6, 6,2,4); cartas[18] = new
-		 * Carta("Hombre Menguante",8,8,9,4); cartas[19] = new
-		 * Carta("Business Mundo",5,5,5,2); cartas[20] = new Carta("Centinela", 2, 8, 5,
-		 * 3); cartas[21] = new Carta("Segarro", 9, 5, 4, 3);
-		 * 
-		 * 
-		 * ArrayList<JugadorCartas> jugadores_cartas = new ArrayList<JugadorCartas>();
-		 * jugadores_cartas.add(new JugadorCartas("12345678L", "Gervasio",
-		 * "de León Mora", 3, 20, 20)); jugadores_cartas.add(new
-		 * JugadorCartas("11111111H","Margarita","Flores Giménez",3,20,20));
-		 * jugadores_cartas.add(new JugadorCartas("12312312A", "Pedro", "Sanchez", 3,
-		 * 20, 20));
-		 */
-        
-		
-//		  jugadores_cartas.add(new JugadorCartas("46464646A", "Pepe", "García García",3, 20, 20)); 
-//		  jugadores_cartas.add(new JugadorCartas("88888888Y", "Eustaquio","Avichuela", 3, 20, 20)); 
-//		  jugadores_cartas.add(new JugadorCartas("45678934Z","Cristian" , "Navarro Gonzalez", 3, 20, 20)); 
-//		  jugadores_cartas.add(new JugadorCartas("46845365N","Dolores","Suárez Castillo", 3, 20, 20));
-//		  jugadores_cartas.add(new JugadorCartas("11112222A","Pablo","Suarez",3,20,20));
-//		  jugadores_cartas.add(new JugadorCartas("11223344M", "Ezequiel", "De todos los santos", 3, 20, 20)); 
-//		  jugadores_cartas.add(new JugadorCartas("76547821D", "Marcos", "Fernández Martín", 3, 20, 20));
-//		  jugadores_cartas.add(new JugadorCartas("84267193J","Inmaculada","Ponce",3,20,20));
-		 
-        
-		/*
-		 * //COMPROBADOR DE QUE SE HAYA INTRODUCIDO EL NUMERO CORRECTO do { if
-		 * (sc.hasNextInt()) { option = sc.nextInt(); if (option>=1 || option <=5) {
-		 * switch (option) { case 1: flg00 = false; flg01 = true; break; case 2: flg00 =
-		 * false; flg02 = true; break; case 3: flg00 = true; flg03 = false;
-		 * //contenedor_jugadores_cartas = new ContenedorJugadoresCartas(); break;
-		 * 
-		 * case 4: //flg00 = false; //flg04 = true;
-		 * Collections.shuffle(jugadores_cartas);
-		 * contenedor_jugadores_cartas.AddJugadores(jugadores_cartas );
-		 * 
-		 * //contenedor_cartas = new ContenedorCartas(); for (int i= 0; i<
-		 * cartas.length; i++) { contenedor_cartas.AddCarta(cartas[i]); }
-		 * 
-		 * PartidaCartas pc = new PartidaCartas(contenedor_jugadores_cartas,
-		 * contenedor_cartas); pc.repartir_cartas(); pc.iniciar_juego(); //break; break;
-		 * case 5: flg00 = false; flg05 = true;
-		 * 
-		 * System.out.println("**************ultimos 6 jugadores****************"); for
-		 * (JugadorCartas jcartas :jugadores_cartas) { System.out.println(jcartas); }
-		 * 
-		 * System.out.println("**************FIN 6 jugadores****************"); break;
-		 * default: System.out.println(menu); //break; } }else {
-		 * System.out.println("Error, numero fuera de rango"); sc.nextInt(); } }else {
-		 * System.out.println("Error, solo se pueden introducir numeros"); sc.next(); }
-		 * } while (flg00);
-		 * //*******************************************************************
-		 * 
-		 * while (flg01) { System.out.println("Introduce el nombre de tu personaje");
-		 * String nombre = sc.next();
-		 * System.out.println("Introduce los apellidos de tu personaje"); String
-		 * apellidos = sc.next();
-		 * System.out.println("Introduce el nº de DNI de tu personaje"); boolean
-		 * correcto = false; String numeroDni; do { if (sc.hasNextInt()) { numeroDni =
-		 * sc.next(); if (numeroDni.length() == 8) {
-		 * System.out.println("OCUPA 8 ESPACIOS"); correcto = true; } else { System.out.
-		 * println("Error, la cantidad de numero introduciods no coincide con los requeridos para el dni"
-		 * ); } } else { System.out.println("Error, deben ser números."); } } while
-		 * (!correcto); System.out.println("Introduce la letra de DNI de tu personaje");
-		 * String letraDni; //int numero = (int) (numeroDni); }
-		 * 
-		 */
-		/**
-		 * 
-		 * 
-		 * */
-		//contenedor_jugadores_cartas = new ContenedorJugadoresCartas();
-		//Collections.shuffle(jugadores_cartas);
-		//contenedor_jugadores_cartas.AddJugadores(jugadores_cartas );
-		
-
-
-		//contenedor_cartas = new ContenedorCartas();
-		/*
-		 * for (int i= 0; i< cartas.length; i++) {
-		 * contenedor_cartas.AddCarta(cartas[i]); }
-		 */
-
-		/*
-		 * while (flg04) { PartidaCartas pc = new
-		 * PartidaCartas(contenedor_jugadores_cartas, contenedor_cartas);
-		 * pc.repartir_cartas(); pc.iniciar_juego();
-		 * 
-		 * }
-		 */
-		/*
-		 * while (flg05) {
-		 * 
-		 * System.out.println("**************ultimos 6 jugadores****************"); for
-		 * (JugadorCartas jcartas :jugadores_cartas) { System.out.println(jcartas); }
-		 * 
-		 * 
-		 * }
-		 */
-		
-		
-		/*
-		 * System.out.println("**************ultimos 6 jugadores****************");
-		 * 
-		 * for (JugadorCartas jcartas :jugadores_cartas) { System.out.println(jcartas);
-		 * }
-		 */
-		
+        menu.mostrarMenu();		
 	}
 	public boolean comprobarDni(String dni, String letraDni) {
 		
@@ -180,7 +46,7 @@ class Menu{
 	
     public void mostrarMenu() {
         Scanner sc = new Scanner(System.in);
-        String menu = "JUEGO DE CARTAS\n1.-Crear Jugador\n2,-Setear Rondas\n3.-Setear Jugadores\n4.-Comenzar Partida\n5.-Estádisticas\n6.-Exit";
+        String menu = "JUEGO DE CARTAS\n1.-Crear Jugador\n2.-Setear Jugadores\n3.-Comenzar Partida\n4.-Mostrar Jugadores\n5.-Exit";
         int opcion =0;
 
         do {
@@ -195,22 +61,19 @@ class Menu{
 		
 			            switch (opcion) {
 			                case 1:
-			                    //crearJugador(scanner);
-			                	cargarJugadores();
+			                	crearJugadores(sc);
+			                	//cargarJugadores();
 			                    break;
 			                case 2:
-			                	setRondas(sc);
+			                    setearJugadores(sc);
 			                    break;
 			                case 3:
-			                    //mostrarJugadores();
+			                	iniciarJuego(sc);
 			                    break;
 			                case 4:
-			                	iniciarJuego();
-			                    break;
-			                case 5:
 			                    mostrarEstadisticas();
 			                    break;
-			                case 6:
+			                case 5:
 			                    System.out.println("Saliendo del juego...");
 			                    break;
 		
@@ -237,6 +100,83 @@ class Menu{
 		}
     }
     
+    private void setearJugadores(Scanner sc) {
+    	
+    	
+		System.out.println();
+		System.out.println(String.format("  %-10s %-32s %4s %4s ", "DNI","Nombre Apellidos","Mana","Vida"));
+		System.out.println();
+		
+		//for (JugadorCartas jcartas :jugadores_cartas) { System.out.println(jcartas.showJC()); }
+		 
+		while (!contenedor_jugadores_cartas.jugadores_completo()) {		
+			for (JugadorCartas jcartas :jugadores_cartas) {System.out.println(jcartas.showJC());}
+			System.out.println("\nJugadores seleccionados: "+ contenedor_jugadores_cartas.num_jugadores_notnull());
+			if (contenedor_jugadores_cartas.num_jugadores_notnull()>0) {
+				for (JugadorCartas jcartas :contenedor_jugadores_cartas.getJugadores()) {
+					if (jcartas instanceof JugadorCartas) {
+						System.out.println(jcartas.showJugadorSeteado());	
+					}
+				}				
+			}
+			System.out.println("Pendientes de seleccionar: "+ contenedor_jugadores_cartas.num_jugadores_null()+"\n");
+			System.out.println("Introduce el DNI del jugador a seleccionar: "+"\n");
+			String dni_jugador = sc.next();
+			JugadorCartas jugadorSeteado = buscar_por_dni(dni_jugador);
+
+			if (jugadorSeteado instanceof JugadorCartas) {
+				contenedor_jugadores_cartas.AddJugador(jugadorSeteado);
+				
+				for (JugadorCartas jcartas :jugadores_cartas) { System.out.println(jcartas.showJC()); }
+
+				System.out.println();
+				System.out.println("Jugador/es seleccionado:");
+
+				System.out.println(jugadorSeteado.showJugadorSeteado()+"\n");
+				System.out.print("Enter para continuar...");
+				sc.nextLine();
+				
+			}else {
+				System.out.println("No existe ningún jugador con DNI " + dni_jugador + "\nIntentelo nuevamente. ");
+				//System.out.println("Intentelo nuevamente. ");
+				System.out.print("Enter para continuar...");
+				sc.nextLine();
+			}
+
+		}
+		System.out.println();
+		
+    }
+    
+    private JugadorCartas buscar_por_dni(String dni) {
+		for (JugadorCartas jcartas :jugadores_cartas) {
+			if (jcartas.getDni().equals(dni)){
+				System.out.println(jcartas.showJC());
+				return jcartas;
+			}
+		}
+    	return null;
+    }
+    
+    private void crearJugadores(Scanner sc)  {
+    	System.out.println("Introduce el nombre de tu personaje");
+		String nombre = sc.next();
+		System.out.println("Introduce los apellidos de tu personaje");
+		sc.nextLine();
+		String apellidos = sc.nextLine();
+		System.out.println("Introduce el DNI de tu personaje");
+		String dni=sc.next();
+		System.out.println("Quieres agregar el jugador a la lista? Y/n");
+		String letra = sc.next();
+		if (letra.equals("Y")) {
+			System.out.println("JUgador añadido");
+			jugadores_cartas.add(new JugadorCartas(dni, nombre, apellidos, 3, 20, 20));
+		} else  {
+			System.out.println("JUgador no añadido");
+		}
+		System.out.println(jugadores_cartas);
+    }
+    
     private void cargarJugadores() {
         jugadores_cartas.add(new JugadorCartas("12345678L", "Gervasio", "de León Mora", 3, 20, 20));
         jugadores_cartas.add(new JugadorCartas("11111111H","Margarita","Flores Giménez",3,20,20));
@@ -252,14 +192,21 @@ class Menu{
         
 		//Collections.shuffle(jugadores_cartas);
 		
-		contenedor_jugadores_cartas.AddJugadores(jugadores_cartas );
+		//contenedor_jugadores_cartas.AddJugadores(jugadores_cartas );
     }
     
-	private void iniciarJuego() {
-
-		PartidaCartas pc = new PartidaCartas(this.contenedor_jugadores_cartas, this.contenedor_cartas);
-		pc.repartir_cartas();
-		pc.iniciar_juego();
+	private void iniciarJuego(Scanner scanner) {
+		if (contenedor_jugadores_cartas.num_jugadores_null()==0) {
+			System.out.print("Añadir número de rondas: ");
+	        this.rondas = scanner.nextInt();
+			PartidaCartas pc = new PartidaCartas(this.contenedor_jugadores_cartas, this.contenedor_cartas, this.rondas);
+			pc.repartir_cartas();
+			pc.iniciar_juego();			
+		}else {
+			System.out.println(" Antes de iniciar juego debe setear jugadores. ");
+			System.out.println("ERROR Antes de iniciar juego debe setear jugadores. ");
+			scanner.nextLine();
+		}
 	}
 	
 	private void cargarCartas() {
@@ -267,11 +214,11 @@ class Menu{
 		
 		Carta[] cartas = new Carta[22];
         cartas[0] = new Carta("Zorro de 9 colas", 4, 5, 4, 1);
-        cartas[1] =  new Carta("Gobblin", 5, 5, 4, 3);
+        cartas[1] = new Carta("Gobblin", 5, 5, 4, 3);
         cartas[2] = new Carta("Guerrero", 6, 4, 5, 4);
         cartas[3] = new Carta("Piedrin", 1, 8, 1, 1);
         cartas[4] = new Carta("Slime", 2, 3, 2, 2);
-        cartas[5] =  new Carta("Puerta de Baldur", 0,7,4,1);
+        cartas[5] = new Carta("Puerta de Baldur", 0,7,4,1);
         cartas[6] = new Carta("Guiverno", 7, 4, 6, 9);
         cartas[7] = new Carta("Ferrosaurio", 8, 6, 5, 7);
         cartas[8] = new Carta("Balatro Balátrez",6,2,3,5);
@@ -285,22 +232,16 @@ class Menu{
         cartas[16] = new Carta("Gustavo Fring", 3, 7, 1, 6);
         cartas[17] = new Carta("Rusello", 6, 6,2,4);
         cartas[18] = new Carta("Hombre Menguante",8,8,9,4);
-        cartas[19] =  new Carta("Business Mundo",5,5,5,2);
-        cartas[20] =  new Carta("Centinela", 2, 8, 5, 3);
-        cartas[21] =  new Carta("Segarro", 9, 5, 4, 3);    
+        cartas[19] = new Carta("Business Mundo",5,5,5,2);
+        cartas[20] = new Carta("Centinela", 2, 8, 5, 3);
+        cartas[21] = new Carta("Segarro", 9, 5, 4, 3);    
 				
 		for (int i= 0; i< cartas.length; i++) {
 			contenedor_cartas.AddCarta(cartas[i]);
 		}
         
 	}
-	
-    private void setRondas(Scanner scanner) {
-        System.out.print("Añadir número de rondas: ");
-        this.rondas = scanner.nextInt();
-    }
-    
-    
+	   
 }
 
 class JugadorCartas extends Jugador{
@@ -364,20 +305,41 @@ class JugadorCartas extends Jugador{
 		return cartas_jugador[(int) (numero_cartas*Math.random())];
 	}
 	
+	
+	public String showJC() {
+		return String.format("%-12s %-12s %-20s %4d %4d ", super.dni, super.nombre,super.apellidos,this.mana,this.vida);
+	}	
+
+	public String showJugadorSeteado() {
+		return String.format("%-12s %-12s %-20s ", super.dni, super.nombre,super.apellidos);
+	}	
+	
 	public String toString() {
 		return super.toString()+"\n"+"Vida = "+vida+"\n"+"Mana = "+mana+"\n"+"Cartas = "+Arrays.toString(cartas_jugador);
 	}
 }
 
 class PartidaCartas{
+	private int rondas;
+	public PartidaCartas(int rondas) {
+		super();
+		this.rondas = rondas;
+	}
+	public int getRondas() {
+		return rondas;
+	}
+	public void setRondas(int rondas) {
+		this.rondas = rondas;
+	}
 	Scanner sc = new Scanner(System.in);
 	private ContenedorJugadoresCartas jugadores;
 	private ContenedorCartas cartas;
 	private JugadorCartas[] jugadores_turno ;
-	public PartidaCartas(ContenedorJugadoresCartas jugadores, ContenedorCartas cartas) {
+	public PartidaCartas(ContenedorJugadoresCartas jugadores, ContenedorCartas cartas, int rondas) {
 		super();
 		this.jugadores = jugadores;
 		this.cartas = cartas;
+		this.rondas = rondas;
 	}
 	public void repartir_cartas() {
 		JugadorCartas[] array_jugadores = jugadores.getJugadores();
@@ -402,47 +364,49 @@ class PartidaCartas{
 		//while (!jugadores.ganador()) {
 			
 
-			jugadores_turno = jugadores.getDosJugadoresCartasAleatorios();
-			System.out.println("lalala");
-			// un solo turno
-			while (jugadores_turno[0].getVida() > 0 && jugadores_turno[1].getVida() > 0) {
-				turno =((int) ( 10 * Math.random()))%2;
-				carta_atacante = jugadores_turno[turno%2].getCartaAleatoria();
-				carta_defensora = jugadores_turno[(turno+1)%2].getCartaAleatoria();
-				recuperacion_mana = (int) (3*Math.random() +1);
-				numero_aleatorio = (int) (10*Math.random() +1);
-				if (carta_atacante.getAgilidad() >= numero_aleatorio) {
-					acierto = true;
+			//jugadores_turno = jugadores.getDosJugadoresCartasAleatorios();
+			jugadores_turno = jugadores.getJugadores();
+			System.out.println("Rondas "+ getRondas());
+			for (int i = 0; i<getRondas();i++) {
+				while (jugadores_turno[0].getVida() > 0 && jugadores_turno[1].getVida() > 0) {
+					turno =((int) ( 10 * Math.random()))%2;
+					carta_atacante = jugadores_turno[turno%2].getCartaAleatoria();
+					carta_defensora = jugadores_turno[(turno+1)%2].getCartaAleatoria();
+					recuperacion_mana = (int) (3*Math.random() +1);
+					numero_aleatorio = (int) (10*Math.random() +1);
+					if (carta_atacante.getAgilidad() >= numero_aleatorio) {
+						acierto = true;
+					}else {
+						acierto = false;
+					}
+					
+					if (acierto) {
+						// hago daño al defensor
+						damage = carta_atacante.getAtaque()- (int)(carta_atacante.getAtaque()*carta_defensora.getDefensa()/10);
+						jugadores_turno[(turno+1)%2].setVida(jugadores_turno[(turno+1)%2].getVida()-damage);
+					}
+					jugadores_turno[turno%2].setMana(jugadores_turno[turno%2].getMana()-carta_atacante.getCosteMana());
+					jugadores_turno[turno%2].setMana(jugadores_turno[turno%2].getMana()+recuperacion_mana);
+					turno ++;
+					
+				}
+				
+				if (jugadores_turno[0].getVida() > 0) {
+					System.out.println(jugadores_turno[0].getNombre() + " ha ganado el turno");
+					System.out.println(jugadores_turno[1].getNombre() + " ha perdido el turno");
 				}else {
-					acierto = false;
+					System.out.println(jugadores_turno[1].getNombre() + " ha ganado el turno");
+					System.out.println(jugadores_turno[0].getNombre() + " ha perdido el turno");
 				}
-				
-				if (acierto) {
-					// hago daño al defensor
-					damage = carta_atacante.getAtaque()- (int)(carta_atacante.getAtaque()*carta_defensora.getDefensa()/10);
-					jugadores_turno[(turno+1)%2].setVida(jugadores_turno[(turno+1)%2].getVida()-damage);
-				}
-				jugadores_turno[turno%2].setMana(jugadores_turno[turno%2].getMana()-carta_atacante.getCosteMana());
-				jugadores_turno[turno%2].setMana(jugadores_turno[turno%2].getMana()+recuperacion_mana);
-				turno ++;
-				
 			}
 			
-			if (jugadores_turno[0].getVida() > 0) {
-				System.out.println(jugadores_turno[0].getNombre() + " ha ganado el turno");
-				System.out.println(jugadores_turno[1].getNombre() + " ha perdido el turno");
-			}else {
-				System.out.println(jugadores_turno[1].getNombre() + " ha ganado el turno");
-				System.out.println(jugadores_turno[0].getNombre() + " ha perdido el turno");
-			}
-
 	}
 	
 }
 
 class ContenedorJugadoresCartas{
 	private final int NUMERO_CARTAS = 3;
-	private final int NUMERO_JUGADORES = 5;
+	private final int NUMERO_JUGADORES = 2;
 	private JugadorCartas[] jugadores = new JugadorCartas[NUMERO_JUGADORES];
 
 	
@@ -478,14 +442,15 @@ class ContenedorJugadoresCartas{
 		return false;
 	}
 	
-	public void AddJugadores(ArrayList<JugadorCartas> jugadores_cartas) {
-		int limit = (jugadores_cartas.size() > NUMERO_JUGADORES) ? NUMERO_JUGADORES:jugadores_cartas.size();
-		
-		for (int i=0; i < limit;i++) {
-			this.AddJugador(jugadores_cartas.get(i));
-		}
-
-	}
+	/*
+	 * public void AddJugadores(ArrayList<JugadorCartas> jugadores_cartas) { int
+	 * limit = (jugadores_cartas.size() > NUMERO_JUGADORES) ?
+	 * NUMERO_JUGADORES:jugadores_cartas.size();
+	 * 
+	 * for (int i=0; i < limit;i++) { this.AddJugador(jugadores_cartas.get(i)); }
+	 * 
+	 * }
+	 */
 	
 	public JugadorCartas getJugadorAleatorio() {
 		int numero_aleatorio ;
@@ -540,6 +505,26 @@ class ContenedorJugadoresCartas{
 		}
 		return completo;
 	}
+
+	public int num_jugadores_null() {
+		int num = 0;
+		for (int i= 0; i < jugadores.length; i++) {
+			if (jugadores[i] == null) {
+				num++;
+			}
+		}
+		return num;
+	}
+
+	public int num_jugadores_notnull() {
+		int num = 0;
+		for (int i= 0; i < jugadores.length; i++) {
+			if (jugadores[i] != null) {
+				num++;
+			}
+		}
+		return num;
+	}	
 	
 }
 
