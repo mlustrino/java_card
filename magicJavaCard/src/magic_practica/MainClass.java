@@ -61,8 +61,8 @@ class Menu{
 		
 			            switch (opcion) {
 			                case 1:
-			                	crearJugadores(sc);
-			                	//cargarJugadores();
+			                	//crearJugadores(sc);
+			                	cargarJugadores();
 			                    break;
 			                case 2:
 			                    setearJugadores(sc);
@@ -102,12 +102,37 @@ class Menu{
     
     private void setearJugadores(Scanner sc) {
     	
+    	String cabecera = String.format("\n  %-10s %-32s %4s %4s \n", "DNI","Nombre Apellidos","Mana","Vida");
+    	String cabeceraCompleto = String.format("\n  %-10s %-32s ", "DNI","Nombre Apellidos");
+    	String enterContinuar = String.format("  %s ", "Enter para continuar...");
     	
-		System.out.println();
-		System.out.println(String.format("  %-10s %-32s %4s %4s ", "DNI","Nombre Apellidos","Mana","Vida"));
-		System.out.println();
+    	if (jugadores_cartas.size() < contenedor_jugadores_cartas.getNUMERO_JUGADORES()) {
+    		System.out.println("Para setear, debes crear jugadores previamente.");
+
+			System.out.print(enterContinuar);
+			sc.nextLine();
+    		return;
+     	}else if(contenedor_jugadores_cartas.jugadores_completo()) {
+     		
+     		System.out.println("Ya se han seleccionado jugadores, puedes comenzar la partida.\n Jugadores seleccionados: "+"\n");
+    		System.out.println(cabeceraCompleto);
+
+    		for (JugadorCartas jcartas :contenedor_jugadores_cartas.getJugadores()) {
+				if (jcartas instanceof JugadorCartas) {
+					System.out.println(jcartas.showJugadorSeteado());	
+				}
+			}
+    		System.out.println();
+			System.out.print(enterContinuar);
+			sc.nextLine();
+    		return;  		
+    		
+    	}
+    	
+    	
+    	
+		System.out.println(cabecera);
 		
-		//for (JugadorCartas jcartas :jugadores_cartas) { System.out.println(jcartas.showJC()); }
 		 
 		while (!contenedor_jugadores_cartas.jugadores_completo()) {		
 			for (JugadorCartas jcartas :jugadores_cartas) {System.out.println(jcartas.showJC());}
@@ -133,13 +158,13 @@ class Menu{
 				System.out.println("Jugador/es seleccionado:");
 
 				System.out.println(jugadorSeteado.showJugadorSeteado()+"\n");
-				System.out.print("Enter para continuar...");
+				System.out.print(enterContinuar);
 				sc.nextLine();
 				
 			}else {
 				System.out.println("No existe ningún jugador con DNI " + dni_jugador + "\nIntentelo nuevamente. ");
 				//System.out.println("Intentelo nuevamente. ");
-				System.out.print("Enter para continuar...");
+				System.out.print(enterContinuar);
 				sc.nextLine();
 			}
 
@@ -303,15 +328,17 @@ class JugadorCartas extends Jugador{
 	}
 	public Carta getCartaAleatoria() {
 		return cartas_jugador[(int) (numero_cartas*Math.random())];
+	}	
+	public String getNombreCompleto() {
+		return String.format("%s %s", this.getNombre(),this.getApellidos() ); 
 	}
-	
 	
 	public String showJC() {
 		return String.format("%-12s %-12s %-20s %4d %4d ", super.dni, super.nombre,super.apellidos,this.mana,this.vida);
 	}	
 
 	public String showJugadorSeteado() {
-		return String.format("%-12s %-12s %-20s ", super.dni, super.nombre,super.apellidos);
+		return String.format("%-12s %s %s ", super.dni, super.nombre,super.apellidos);
 	}	
 	
 	public String toString() {
@@ -348,11 +375,6 @@ class PartidaCartas{
 				jugadorCartas.getCartas_jugador()[i]= cartas.getCartaAleatoria();
 			}
 		}
-		/*
-		 * for (int i= 0; i< jugadores.getNUMERO_JUGADORES(); i++) { for (int j = 0; j<
-		 * jugadores.getNUMERO_CARTAS(); j++) {
-		 * array_jugadores[i].getCartas_jugador()[j]= cartas.getCartaAleatoria(); } }
-		 */
 	}
 	public void iniciar_juego() {
 		int turno;
@@ -361,13 +383,21 @@ class PartidaCartas{
 		int damage, recuperacion_mana;
 		boolean acierto;
 		int numero_aleatorio;
+		int jugador_win_uno,jugador_win_dos;
 		//while (!jugadores.ganador()) {
 			
 
 			//jugadores_turno = jugadores.getDosJugadoresCartasAleatorios();
 			jugadores_turno = jugadores.getJugadores();
 			System.out.println("Rondas "+ getRondas());
+			System.out.println(String.format("%s %s %s","=".repeat(70),"Inicio de Partida","=".repeat(70)));
+			for (int i = 0; i < jugadores_turno.length; i++) {
+				System.out.println(String.format("%s %s %s","Jugador "+(i+1)+" = ",jugadores_turno[i].getNombreCompleto()," ("+jugadores_turno[i].getDni()+")"));
+			}
 			for (int i = 0; i<getRondas();i++) {
+				System.out.println(String.format("%s %s %s","-".repeat(70),"Ronda número "+(i+1),"-".repeat(70)));
+				if (i>0) {prepararProximaRonda(); }
+				
 				while (jugadores_turno[0].getVida() > 0 && jugadores_turno[1].getVida() > 0) {
 					turno =((int) ( 10 * Math.random()))%2;
 					carta_atacante = jugadores_turno[turno%2].getCartaAleatoria();
@@ -392,14 +422,26 @@ class PartidaCartas{
 				}
 				
 				if (jugadores_turno[0].getVida() > 0) {
-					System.out.println(jugadores_turno[0].getNombre() + " ha ganado el turno");
-					System.out.println(jugadores_turno[1].getNombre() + " ha perdido el turno");
+					System.out.println(jugadores_turno[0].getNombre() + " ha ganado la ronda "+ (i+1));
+					System.out.println(jugadores_turno[1].getNombre() + " ha perdido en la ronda "+ (i+1));
 				}else {
-					System.out.println(jugadores_turno[1].getNombre() + " ha ganado el turno");
-					System.out.println(jugadores_turno[0].getNombre() + " ha perdido el turno");
+					System.out.println(jugadores_turno[1].getNombre() + " ha ganado la ronda "+ (i+1));
+					System.out.println(jugadores_turno[0].getNombre() + " ha perdido en la ronda "+ (i+1));
 				}
+				
+				
 			}
 			
+	}
+	
+	private void prepararProximaRonda() {
+		for (JugadorCartas jugadorCartas : jugadores_turno) {
+			for (int i = 0; i< jugadores.getNUMERO_CARTAS(); i++) {
+				jugadorCartas.getCartas_jugador()[i]= cartas.getCartaAleatoria();
+			}
+			jugadorCartas.resetear_mana();
+			jugadorCartas.resetear_vida();			
+		}
 	}
 	
 }
@@ -441,16 +483,6 @@ class ContenedorJugadoresCartas{
 		System.out.println("No se ha podido añadir el Jugador");
 		return false;
 	}
-	
-	/*
-	 * public void AddJugadores(ArrayList<JugadorCartas> jugadores_cartas) { int
-	 * limit = (jugadores_cartas.size() > NUMERO_JUGADORES) ?
-	 * NUMERO_JUGADORES:jugadores_cartas.size();
-	 * 
-	 * for (int i=0; i < limit;i++) { this.AddJugador(jugadores_cartas.get(i)); }
-	 * 
-	 * }
-	 */
 	
 	public JugadorCartas getJugadorAleatorio() {
 		int numero_aleatorio ;
@@ -684,6 +716,9 @@ abstract class Jugador{
 	}
 	public void setApellidos(String apellidos) {
 		this.apellidos = apellidos;
+	}
+	public String getNombreCompleto() {
+		return "";		
 	}
 	public String toString() {
 		//return "Dni = "+dni+"\n"+"Nombre = "+nombre+"\n"+"Apellidos = "+apellidos;
