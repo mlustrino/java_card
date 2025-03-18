@@ -61,8 +61,8 @@ class Menu{
 		
 			            switch (opcion) {
 			                case 1:
-			                	//crearJugadores(sc);
-			                	cargarJugadores();
+			                	crearJugadores(sc);
+			                	//cargarJugadores();
 			                    break;
 			                case 2:
 			                    setearJugadores(sc);
@@ -235,7 +235,6 @@ class Menu{
 	}
 	
 	private void cargarCartas() {
-
 		
 		Carta[] cartas = new Carta[22];
         cartas[0] = new Carta("Zorro de 9 colas", 4, 5, 4, 1);
