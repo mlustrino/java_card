@@ -3,9 +3,8 @@ package magic_practica;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
-
-
 import java.lang.Math;
 
 public class MainClass {
@@ -46,7 +45,7 @@ class Menu{
 	
     public void mostrarMenu() {
         Scanner sc = new Scanner(System.in);
-        String menu = "JUEGO DE CARTAS\n1.-Crear Jugador\n2.-Setear Jugadores\n3.-Comenzar Partida\n4.-Mostrar Jugadores\n5.-Exit";
+        String menu = "\n\n     LA CONQUISTA DE VINLAND     \n\n1.-Crear Jugador\n2.-Setear Jugadores\n3.-Comenzar Partida\n4.-Mostrar Jugadores\n5.-Mostrar cartas\n6.-Exit";
         int opcion =0;
 
         do {
@@ -62,7 +61,6 @@ class Menu{
 			            switch (opcion) {
 			                case 1:
 			                	crearJugadores(sc);
-			                	//cargarJugadores();
 			                    break;
 			                case 2:
 			                    setearJugadores(sc);
@@ -71,9 +69,12 @@ class Menu{
 			                	iniciarJuego(sc);
 			                    break;
 			                case 4:
-			                    mostrarEstadisticas();
+	                            mostrarEstadisticas(sc);
 			                    break;
 			                case 5:
+			                	mostrarCartas(sc);
+			                    break;
+			                case 6:
 			                    System.out.println("Saliendo del juego...");
 			                    break;
 		
@@ -92,12 +93,68 @@ class Menu{
         sc.close();
     }
     
-    private void mostrarEstadisticas() {
+    private void mostrarCartas(Scanner sc) {
+    	String enterContinuar = String.format("  %s ", "Enter para continuar...");
+    	contenedor_cartas.mostrar_cartas();
 
-		System.out.println("**************ultimos 6 jugadores****************");
-		for (JugadorCartas jcartas :jugadores_cartas) {
-			System.out.println(jcartas);
-		}
+		System.out.println();
+		System.out.print(enterContinuar);
+		sc.nextLine();
+    }
+    
+
+    private void mostrarEstadisticas(Scanner sc) {
+        String menu = "MOSTRAR JUGADORES\n1.-Mostrar ordenados por dni\n2.-Mostrar ordenados por nombre\n3.-Mostrar ordenados por apellidos\n4.-Go back";
+        int opcion = 0;
+        do {
+            System.out.println(menu);
+            System.out.print("Selecciona una opción: ");
+            if (sc.hasNextInt()) {
+
+                opcion = sc.nextInt();
+                if (opcion >= 1 || opcion <= 6) {
+
+                    sc.nextLine();
+                    String cabecera = String.format("\n  %-10s %-32s ", "DNI", "Nombre Apellidos");
+                    switch (opcion) {
+                        case 1:
+                            Collections.sort(jugadores_cartas);
+
+                            System.out.println(cabecera);
+                            for (JugadorCartas jugador : jugadores_cartas) {
+                                System.out.println(jugador.mostrarJugadores());
+                            }
+                            break;
+                        case 2:
+                            Collections.sort(jugadores_cartas, new OrdenarJugadoresPorNombre());
+                            System.out.println(cabecera);
+                            for (JugadorCartas jugador : jugadores_cartas) {
+                                System.out.println(jugador.mostrarJugadores());
+                            }
+                            break;
+                        case 3:
+                            Collections.sort(jugadores_cartas, new OrdenarJugadoresPorApellidos());
+                            System.out.println(cabecera);
+                            for (JugadorCartas jugador : jugadores_cartas) {
+                                System.out.println(jugador.mostrarJugadores());
+                            }
+                            break;
+                        case 4:
+                            return;
+
+                    }
+                } else {
+                    System.out.println("Error, numero fuera de rango");
+                    sc.nextInt();
+                }
+            } else {
+                System.out.println("Error, solo se pueden introducir numeros");
+                sc.next();
+            }
+        } while (opcion != 4);
+
+        sc.close();
+
     }
     
     private void setearJugadores(Scanner sc) {
@@ -107,19 +164,19 @@ class Menu{
     	String enterContinuar = String.format("  %s ", "Enter para continuar...");
     	
     	if (jugadores_cartas.size() < contenedor_jugadores_cartas.getNUMERO_JUGADORES()) {
-    		System.out.println("Para setear, debes crear jugadores previamente.");
+    		System.out.println("\nPara setear, debes crear jugadores previamente.");
 
 			System.out.print(enterContinuar);
 			sc.nextLine();
     		return;
      	}else if(contenedor_jugadores_cartas.jugadores_completo()) {
      		
-     		System.out.println("Ya se han seleccionado jugadores, puedes comenzar la partida.\n Jugadores seleccionados: "+"\n");
+     		System.out.println("\nYa se han seleccionado jugadores, puedes comenzar la partida.\n Jugadores seleccionados: "+"\n");
     		System.out.println(cabeceraCompleto);
 
     		for (JugadorCartas jcartas :contenedor_jugadores_cartas.getJugadores()) {
 				if (jcartas instanceof JugadorCartas) {
-					System.out.println(jcartas.showJugadorSeteado());	
+					System.out.println(jcartas.mostrarJugadores());	
 				}
 			}
     		System.out.println();
@@ -140,7 +197,7 @@ class Menu{
 			if (contenedor_jugadores_cartas.num_jugadores_notnull()>0) {
 				for (JugadorCartas jcartas :contenedor_jugadores_cartas.getJugadores()) {
 					if (jcartas instanceof JugadorCartas) {
-						System.out.println(jcartas.showJugadorSeteado());	
+						System.out.println(jcartas.mostrarJugadores());	
 					}
 				}				
 			}
@@ -157,13 +214,12 @@ class Menu{
 				System.out.println();
 				System.out.println("Jugador/es seleccionado:");
 
-				System.out.println(jugadorSeteado.showJugadorSeteado()+"\n");
+				System.out.println(jugadorSeteado.mostrarJugadores()+"\n");
 				System.out.print(enterContinuar);
 				sc.nextLine();
 				
 			}else {
 				System.out.println("No existe ningún jugador con DNI " + dni_jugador + "\nIntentelo nuevamente. ");
-				//System.out.println("Intentelo nuevamente. ");
 				System.out.print(enterContinuar);
 				sc.nextLine();
 			}
@@ -182,84 +238,106 @@ class Menu{
 		}
     	return null;
     }
-    
-    private void crearJugadores(Scanner sc)  {
-    	System.out.println("Introduce el nombre de tu personaje");
-		String nombre = sc.next();
-		System.out.println("Introduce los apellidos de tu personaje");
-		sc.nextLine();
-		String apellidos = sc.nextLine();
-		System.out.println("Introduce el DNI de tu personaje");
-		String dni=sc.next();
-		System.out.println("Quieres agregar el jugador a la lista? Y/n");
-		String letra = sc.next();
-		if (letra.equals("Y")) {
-			System.out.println("JUgador añadido");
-			jugadores_cartas.add(new JugadorCartas(dni, nombre, apellidos, 3, 20, 20));
-		} else  {
-			System.out.println("JUgador no añadido");
-		}
-		System.out.println(jugadores_cartas);
+
+    private void crearJugadores(Scanner sc) {
+        System.out.println("Introduce el nombre de tu personaje");
+        String nombre = sc.next();
+        System.out.println("Introduce los apellidos de tu personaje");
+        sc.nextLine();
+        String apellidos = sc.nextLine();
+        System.out.println("Introduce el DNI de tu personaje");
+        String dni = sc.next();
+        System.out.println("Quieres agregar el jugador a la lista? Y/n");
+        String letra = sc.next();
+        if (letra.equals("Y")) {
+            System.out.println("JUgador añadido");
+            jugadores_cartas.add(new JugadorCartas(dni, nombre, apellidos, 3, 20, 20));
+        } else {
+            System.out.println("JUgador no añadido");
+        }
+        System.out.println(jugadores_cartas);
     }
     
-    private void cargarJugadores() {
-        jugadores_cartas.add(new JugadorCartas("12345678L", "Gervasio", "de León Mora", 3, 20, 20));
-        jugadores_cartas.add(new JugadorCartas("11111111H","Margarita","Flores Giménez",3,20,20));
-        jugadores_cartas.add(new JugadorCartas("12312312A", "Pedro", "Sanchez", 3, 20, 20));
-        jugadores_cartas.add(new JugadorCartas("46464646A", "Pepe", "García García",3, 20, 20));
-        jugadores_cartas.add(new JugadorCartas("88888888Y", "Eustaquio","Avichuela", 3, 20, 20)); 
-        jugadores_cartas.add(new JugadorCartas("45678934Z","Cristian" , "Navarro Gonzalez", 3, 20, 20));
-        jugadores_cartas.add(new JugadorCartas("46845365N","Dolores","Suárez Castillo", 3, 20, 20));
-        jugadores_cartas.add(new JugadorCartas("11112222A","Pablo","Suarez",3,20,20));
-        jugadores_cartas.add(new JugadorCartas("11223344M", "Ezequiel", "De todos los santos", 3, 20, 20));
-        jugadores_cartas.add(new JugadorCartas("76547821D", "Marcos", "Fernández Martín", 3, 20, 20));
-        jugadores_cartas.add(new JugadorCartas("84267193J","Inmaculada","Ponce",3,20,20));
-        
-		//Collections.shuffle(jugadores_cartas);
-		
-		//contenedor_jugadores_cartas.AddJugadores(jugadores_cartas );
-    }
-    
+//    private void cargarJugadores() {
+//        jugadores_cartas.add(new JugadorCartas("12345678L", "Gervasio", "de León Mora", 3, 20, 20));
+//        jugadores_cartas.add(new JugadorCartas("11111111H","Margarita","Flores Giménez",3,20,20));
+//        jugadores_cartas.add(new JugadorCartas("12312312A", "Pedro", "Sanchez", 3, 20, 20));
+//        jugadores_cartas.add(new JugadorCartas("46464646A", "Pepe", "García García",3, 20, 20));
+//        jugadores_cartas.add(new JugadorCartas("88888888Y", "Eustaquio","Avichuela", 3, 20, 20)); 
+//        jugadores_cartas.add(new JugadorCartas("45678934Z","Cristian" , "Navarro Gonzalez", 3, 20, 20));
+//        jugadores_cartas.add(new JugadorCartas("46845365N","Dolores","Suárez Castillo", 3, 20, 20));
+//        jugadores_cartas.add(new JugadorCartas("11112222A","Pablo","Suarez",3,20,20));
+//        jugadores_cartas.add(new JugadorCartas("11223344M", "Ezequiel", "De todos los santos", 3, 20, 20));
+//        jugadores_cartas.add(new JugadorCartas("76547821D", "Marcos", "Fernández Martín", 3, 20, 20));
+//        jugadores_cartas.add(new JugadorCartas("84267193J","Inmaculada","Ponce",3,20,20));
+//        
+//		//Collections.shuffle(jugadores_cartas);
+//		
+//		//contenedor_jugadores_cartas.AddJugadores(jugadores_cartas );
+//    }
+//    
 	private void iniciarJuego(Scanner scanner) {
+    	String enterContinuar = String.format("  %s ", "Enter para continuar...");
 		if (contenedor_jugadores_cartas.num_jugadores_null()==0) {
-			System.out.print("Añadir número de rondas: ");
-	        this.rondas = scanner.nextInt();
+			
+			int opcion=0;   
+			
+			do {
+				System.out.print("\nAñadir número de rondas: (Maximo 3 rondas)\n");
+	            if (scanner.hasNextInt())  {
+
+	                opcion = scanner.nextInt();
+					if (opcion < 1 || opcion > 3) {
+						System.out.print("\nEl valor de rondas debe ser mayor a cero y menor o igual a 3 \n");
+						scanner.nextInt();
+					}
+				}else {
+					System.out.println("Error, solo se pueden introducir numeros");
+					scanner.next();
+				}				
+			}while(opcion < 1 || opcion > 3);	
+			
+			
+		
+	        this.rondas = opcion;
 			PartidaCartas pc = new PartidaCartas(this.contenedor_jugadores_cartas, this.contenedor_cartas, this.rondas);
 			pc.repartir_cartas();
 			pc.iniciar_juego();			
 		}else {
-			System.out.println(" Antes de iniciar juego debe setear jugadores. ");
+			System.out.println();
 			System.out.println("ERROR Antes de iniciar juego debe setear jugadores. ");
+			System.out.println(enterContinuar);
 			scanner.nextLine();
 		}
 	}
 	
 	private void cargarCartas() {
 		
-		Carta[] cartas = new Carta[22];
-        cartas[0] = new Carta("Zorro de 9 colas", 4, 5, 4, 1);
-        cartas[1] = new Carta("Gobblin", 5, 5, 4, 3);
-        cartas[2] = new Carta("Guerrero", 6, 4, 5, 4);
-        cartas[3] = new Carta("Piedrin", 1, 8, 1, 1);
-        cartas[4] = new Carta("Slime", 2, 3, 2, 2);
-        cartas[5] = new Carta("Puerta de Baldur", 0,7,4,1);
-        cartas[6] = new Carta("Guiverno", 7, 4, 6, 9);
-        cartas[7] = new Carta("Ferrosaurio", 8, 6, 5, 7);
-        cartas[8] = new Carta("Balatro Balátrez",6,2,3,5);
-        cartas[9] = new Carta("Slime de Oro", 2, 1, 9, 10);
-        cartas[10] = new Carta("Gólem de piedra", 7, 8, 10, 1);
-        cartas[11] = new Carta("LoboLava",2,4,5,6);
-        cartas[12] = new Carta("Lightning ", 5, 6,4,5);
-        cartas[13] = new Carta("Cifosoa", 5, 3, 6, 1);
-        cartas[14] = new Carta("Minotauro", 3, 2, 2, 6);
-        cartas[15] = new Carta("Hacienda",9 , 10, 5, 7);
-        cartas[16] = new Carta("Gustavo Fring", 3, 7, 1, 6);
-        cartas[17] = new Carta("Rusello", 6, 6,2,4);
-        cartas[18] = new Carta("Hombre Menguante",8,8,9,4);
-        cartas[19] = new Carta("Business Mundo",5,5,5,2);
-        cartas[20] = new Carta("Centinela", 2, 8, 5, 3);
-        cartas[21] = new Carta("Segarro", 9, 5, 4, 3);    
-				
+		Carta[] cartas = new Carta[22];    
+
+        cartas[0] = new Carta("Odín, el Padre de Todo", 7, 8, 8, 3); // Sabiduría Eterna: Roba 2 cartas adicionales al comienzo de tu turno.
+        cartas[1] = new Carta("Thor, el Dios del Trueno", 9, 6, 7, 5); // Martillo de Tormentas: Inflige 3 puntos de daño a todos los enemigos al entrar en juego.
+        cartas[2] = new Carta("Loki, el Tramposo", 5, 4, 6, 8); // Engaño Maestro: Intercambia los valores de ataque y defensa de una criatura enemiga.
+        cartas[3] = new Carta("Freyja, la Diosa del Amor", 4, 7, 6, 4); // Bendición de Vida: Cura 5 puntos de vida a todas tus criaturas.
+        cartas[4] = new Carta("Fenrir, el Lobo Gigante", 8, 5, 7, 6); // Furia Desatada: Si Fenrir es derrotado, inflige 5 puntos de daño a todas las criaturas enemigas.
+        cartas[5] = new Carta("Jörmundgander, la Serpiente del Mundo", 10, 10, 9, 2); // Veneno Letal: Inflige 2 puntos de daño adicionales por cada ataque.
+        cartas[6] = new Carta("Heimdall, el Vigilante", 5, 7, 5, 4); // Cuerno de Alerta: Invoca una criatura adicional al comienzo de tu turno.
+        cartas[7] = new Carta("Baldur, el Dios de la Luz", 6, 6, 6, 5); // Inmortalidad Temporal: Baldur no puede ser derrotado en el próximo turno.
+        cartas[8] = new Carta("Hel, la Reina del Inframundo", 6, 8, 7, 3); // Toque de Muerte: Reduce la defensa del enemigo en 2 puntos al atacar.
+        cartas[9] = new Carta("Tyr, el Dios de la Guerra", 7, 5, 6, 6); // Sacrificio Valiente: Tyr puede atacar dos veces en un turno, pero pierde 2 puntos de defensa.
+        cartas[10] = new Carta("Skadi, la Diosa del Invierno", 5, 6, 5, 4); // Frío Glacial: Congela a una criatura enemiga, impidiendo que ataque en el próximo turno.
+        cartas[11] = new Carta("Freyr, el Dios de la Fertilidad", 4, 6, 5, 5); // Cosecha Abundante: Aumenta el maná máximo en 2 puntos.
+        cartas[12] = new Carta("Valkiria, la Elegidora de los Caídos", 5, 4, 4, 7); // Ascenso al Valhalla: Revive una criatura aliada cuando Valkiria es derrotada.
+        cartas[13] = new Carta("Nidhogg, el Devorador de Raíces", 9, 7, 8, 3); // Corrupción Eterna: Reduce el ataque y defensa de todas las criaturas enemigas en 1 punto.
+        cartas[14] = new Carta("Sif, la Diosa de la Cosecha", 3, 5, 4, 4); // Crecimiento Rápido: Aumenta la defensa de todas tus criaturas en 2 puntos.
+        cartas[15] = new Carta("Mimir, el Sabio", 3, 6, 5, 2); // Conocimiento Ancestral: Roba 3 cartas adicionales.
+        cartas[16] = new Carta("Surtr, el Gigante de Fuego", 10, 8, 9, 2); // Llamas del Ragnarok: Inflige 5 puntos de daño a todas las criaturas enemigas al entrar en juego.
+        cartas[17] = new Carta("Huginn y Muninn, los Cuervos de Odín", 2, 3, 3, 8); // Vigilancia Eterna: Permite ver la mano de tu oponente.
+        cartas[18] = new Carta("Yggdrasil, el Árbol del Mundo", 3, 15, 10, 1); // Raíces Eternas: No puede ser destruido por efectos de daño.
+        cartas[19] = new Carta("Bifröst, el Puente del Arcoíris", 3, 5, 4, 6); // Viaje Instantáneo: Mueve una criatura aliada a cualquier posición en el campo de batalla.
+        cartas[20] = new Carta("Fafnir, el Dragón Codicioso", 9, 7, 8, 4); // Tesoro Maldito: Ganas 2 puntos de maná cada vez que Fafnir ataca.
+        cartas[21] = new Carta("Ragnarok, el Fin del Mundo", 15, 15, 12, 1); // Destrucción Total: Destruye todas las criaturas en el campo de batalla, excepto a Ragnarok.
+        
 		for (int i= 0; i< cartas.length; i++) {
 			contenedor_cartas.AddCarta(cartas[i]);
 		}
@@ -268,7 +346,8 @@ class Menu{
 	   
 }
 
-class JugadorCartas extends Jugador{
+class JugadorCartas extends Jugador implements Comparable<JugadorCartas> {
+	
 	private int numero_cartas;
 	private Carta[] cartas_jugador;
 	private int mana;
@@ -334,15 +413,36 @@ class JugadorCartas extends Jugador{
 	
 	public String showJC() {
 		return String.format("%-12s %-12s %-20s %4d %4d ", super.dni, super.nombre,super.apellidos,this.mana,this.vida);
-	}	
+	}
 
-	public String showJugadorSeteado() {
-		return String.format("%-12s %s %s ", super.dni, super.nombre,super.apellidos);
-	}	
+    public String mostrarJugadores() {
+        return String.format("%-12s %s %s ", super.dni, super.nombre, super.apellidos);
+    }
+
+    @Override
+    public int compareTo(JugadorCartas o) {
+        return this.getDni().compareTo(o.getDni());
+    }
 	
 	public String toString() {
 		return super.toString()+"\n"+"Vida = "+vida+"\n"+"Mana = "+mana+"\n"+"Cartas = "+Arrays.toString(cartas_jugador);
 	}
+}
+
+class OrdenarJugadoresPorNombre implements Comparator<JugadorCartas> {
+
+    @Override
+    public int compare(JugadorCartas o1, JugadorCartas o2) {
+        return o1.getNombre().compareTo(o2.getNombre());
+    }
+}
+
+class OrdenarJugadoresPorApellidos implements Comparator<JugadorCartas> {
+
+    @Override
+    public int compare(JugadorCartas o1, JugadorCartas o2) {
+        return o1.getApellidos().toLowerCase().compareTo(o2.getApellidos().toLowerCase());
+    }
 }
 
 class PartidaCartas{
@@ -382,11 +482,12 @@ class PartidaCartas{
 		int damage, recuperacion_mana;
 		boolean acierto;
 		int numero_aleatorio;
-		int jugador_win_uno,jugador_win_dos;
-		//while (!jugadores.ganador()) {
-			
+		int jugador_uno_win = 0 ,jugador_dos_win = 0;
 
-			//jugadores_turno = jugadores.getDosJugadoresCartasAleatorios();
+		String enterContinuar = String.format("  %s ", "Enter para continuar a la siguiente ronda ...");
+
+
+
 			jugadores_turno = jugadores.getJugadores();
 			System.out.println("Rondas "+ getRondas());
 			System.out.println(String.format("%s %s %s","=".repeat(70),"Inicio de Partida","=".repeat(70)));
@@ -396,11 +497,12 @@ class PartidaCartas{
 			for (int i = 0; i<getRondas();i++) {
 				System.out.println(String.format("%s %s %s","-".repeat(70),"Ronda número "+(i+1),"-".repeat(70)));
 				if (i>0) {prepararProximaRonda(); }
-				
+
 				while (jugadores_turno[0].getVida() > 0 && jugadores_turno[1].getVida() > 0) {
 					turno =((int) ( 10 * Math.random()))%2;
 					carta_atacante = jugadores_turno[turno%2].getCartaAleatoria();
 					carta_defensora = jugadores_turno[(turno+1)%2].getCartaAleatoria();
+
 					recuperacion_mana = (int) (3*Math.random() +1);
 					numero_aleatorio = (int) (10*Math.random() +1);
 					if (carta_atacante.getAgilidad() >= numero_aleatorio) {
@@ -410,9 +512,10 @@ class PartidaCartas{
 					}
 					
 					if (acierto) {
-						// hago daño al defensor
 						damage = carta_atacante.getAtaque()- (int)(carta_atacante.getAtaque()*carta_defensora.getDefensa()/10);
 						jugadores_turno[(turno+1)%2].setVida(jugadores_turno[(turno+1)%2].getVida()-damage);
+						System.out.println("El jugador " + jugadores_turno[turno % 2].getNombre() + " ha atacado a " + jugadores_turno[(turno + 1) % 2].getNombre() + " con la carta " + 
+			                    carta_atacante.getNombre() + " y le ha hecho " + damage + " de daño");
 					}
 					jugadores_turno[turno%2].setMana(jugadores_turno[turno%2].getMana()-carta_atacante.getCosteMana());
 					jugadores_turno[turno%2].setMana(jugadores_turno[turno%2].getMana()+recuperacion_mana);
@@ -421,15 +524,23 @@ class PartidaCartas{
 				}
 				
 				if (jugadores_turno[0].getVida() > 0) {
-					System.out.println(jugadores_turno[0].getNombre() + " ha ganado la ronda "+ (i+1));
-					System.out.println(jugadores_turno[1].getNombre() + " ha perdido en la ronda "+ (i+1));
+					System.out.println(String.format("\nLa ronda %d ha acabado y %s ha ganado a %s",(i+1),jugadores_turno[0].getNombre() ,jugadores_turno[1].getNombre())+"\n");
+					jugador_uno_win++;
 				}else {
-					System.out.println(jugadores_turno[1].getNombre() + " ha ganado la ronda "+ (i+1));
-					System.out.println(jugadores_turno[0].getNombre() + " ha perdido en la ronda "+ (i+1));
+					System.out.println(String.format("\nLa ronda %d ha acabado y %s ha ganado a %s",(i+1),jugadores_turno[1].getNombre() ,jugadores_turno[0].getNombre())+"\n");
+					jugador_dos_win++;
 				}
-				
+		        System.out.print(enterContinuar);
+		        sc.nextLine();
 				
 			}
+	        if (jugador_uno_win > jugador_dos_win) {
+	            System.out.println(jugadores_turno[0].getNombre() + " ha ganado la partida con un total de " + jugador_uno_win + " victorias a " + jugador_dos_win);
+	        } else if (jugador_uno_win < jugador_dos_win) {
+	            System.out.println(jugadores_turno[1].getNombre() + " ha ganado la partida con un total de " + jugador_dos_win + " victorias a " + jugador_uno_win);
+	        }else {
+	        	System.out.println(jugadores_turno[1].getNombre() + " y "+jugadores_turno[1].getNombre() + " han empatado la partida con un total de " + jugador_dos_win + " a " + jugador_uno_win);
+	        }
 			
 	}
 	
@@ -519,14 +630,6 @@ class ContenedorJugadoresCartas{
 		return jugadoresCartasAleatorios;
 		
 	}
-	public void mostrar_jugadores() {
-		for (int i= 0; i < jugadores.length; i++) {
-			if (jugadores[i] != null) {
-				System.out.println("*************Carta "+i+" **************");
-				System.out.println(jugadores[i]);
-			}
-		}
-	}
 	public boolean jugadores_completo() {
 		boolean completo = true;
 		for (int i= 0; i < jugadores.length; i++) {
@@ -536,7 +639,6 @@ class ContenedorJugadoresCartas{
 		}
 		return completo;
 	}
-
 	public int num_jugadores_null() {
 		int num = 0;
 		for (int i= 0; i < jugadores.length; i++) {
@@ -561,7 +663,7 @@ class ContenedorJugadoresCartas{
 
 
 class ContenedorCartas{
-	private  final int NUMERO_CARTAS = 22;
+	private final int NUMERO_CARTAS = 22;
 	private Carta[] cartas = new Carta[NUMERO_CARTAS];
 	private int[] cartasEscogidas = new int[NUMERO_CARTAS];
 	
@@ -575,21 +677,13 @@ class ContenedorCartas{
 	
 	public void AddCarta(Carta carta) {
 		for (int i=0; i< cartas.length;i++) {
-//			if (i == cartas.length ) {
-//				System.out.println("No se ha podido añadir la carta");
-//				break;
-//			}
 			if (cartas[i]==null) {
 				cartas[i] = carta;
-				//System.out.println("Carta añadida correctamente");
-//				break;
 				return;
 			}
 			
 		}
 		System.out.println("No se ha podido añadir la carta");
-		//System.out.println("*******************");
-		//System.out.println(Arrays.toString(cartas));
 	}
 	
 	public Carta getCartaAleatoria() {
@@ -616,10 +710,13 @@ class ContenedorCartas{
 		
 	}
 	public void mostrar_cartas() {
+		if (cartas.length>0) {
+			System.out.println(String.format("\n              %30s              \n","LA CONQUISTA DE VINLAND"));    
+			System.out.println(String.format("%-40s %6s %7s %4s %8s ", "Nombre", "Ataque", "Defensa", "Mana", "Agilidad"));
+	    }
 		for (int i= 0; i < cartas.length; i++) {
 			if (cartas[i] != null) {
-				System.out.println("*************Carta "+i+" **************");
-				System.out.println(cartas[i]);
+				System.out.println(cartas[i].mostrarJugadores());
 			}
 		}
 	}
@@ -682,8 +779,12 @@ class Carta{
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    public String mostrarJugadores() {
+        return String.format("%-40s %6d %7d %4d %8d ", this.nombre, this.ataque, this.defensa, this.costeMana, this.agilidad);
+    }
+
     public String toString(){
-        // String nombre, int ataque, int defensa, int costeMana, int agilidad
         return "Nombre = "+nombre+"\n" +"Ataque = "+ataque+"\n" +"Defensa = "+defensa+"\n" +"costeMana = "+costeMana+"\n" +"Agilidad = "+agilidad;
     }
 }
@@ -720,7 +821,6 @@ abstract class Jugador{
 		return "";		
 	}
 	public String toString() {
-		//return "Dni = "+dni+"\n"+"Nombre = "+nombre+"\n"+"Apellidos = "+apellidos;
 		return "Dni = "+dni+" -- "+"Nombre = "+nombre+" - "+"Apellidos = "+apellidos;
 	}
 }
